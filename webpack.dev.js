@@ -9,10 +9,10 @@ const webpack = require("webpack");
 const setMPA = () => {
   const entry = {};
   const htmlWebpackPlugin = [];
-  const entryFiles = glob.sync(path.join(__dirname, "./src/*/index.js"));
+  const entryFiles = glob.sync(path.join(__dirname, "./src/*/index.tsx"));
   Object.keys(entryFiles).map((item, index) => {
     const entryFile = entryFiles[index];
-    const match = entryFile.match(/src\/(.*)\/index\.js/);
+    const match = entryFile.match(/src\/(.*)\/index\.tsx/);
     const pageName = match && match[1];
     entry[pageName] = entryFile;
     htmlWebpackPlugin.push(
@@ -46,8 +46,12 @@ module.exports = {
     filename: "[name].js"
   },
   mode: "development",
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"]
+  },
   module: {
     rules: [
+      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
       {
         test: /.js$/,
         use: "babel-loader"
@@ -81,14 +85,13 @@ module.exports = {
     contentBase: "./dist",
     hot: true,
     open: true,
-    proxy: {
-      "/2018": {
-        // api表示当前项目请求的key
-        target: "https://user-gold-cdn.xitu.io", // 代理服务器路径
-        pathRewrite: { "^/2018": "/" }, // 重写路径
-        changeOrigin: true
-      }
-    }
+    port: 9999
+    // proxy: {
+    //   "/": {
+    //     target: "https://ka.52shangou.com",
+    //     changeOrigin: true
+    //   }
+    // }
   },
   devtool: "source-map"
 };

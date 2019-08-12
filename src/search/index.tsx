@@ -4,18 +4,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "../../common/index.js";
 import "./search.less";
-import logo from "../images/flower.jpeg";
-import Bar from "./Bar.js";
+import Bar from "./Bar";
+import Apple from "./Apple";
 import axios from "axios";
 
 class Search extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      Text: null
-    };
-  }
-
   componentDidMount() {
     // window.addEventListener("popstate", function(event) {
     //   console.log("回退");
@@ -27,16 +20,19 @@ class Search extends React.Component {
     //   );
     // });
   }
+  test = (te: any) => {
+    console.log(te);
+    axios
+      .get("/ib/ka/category/tree4Organize?organizeId=72&shopId=1006202")
+      .then(res => {
+        console.log(res);
+      });
+    return te;
+  };
 
   loadComponent = () => {
     // import("./test.js").then(Text => {
-    //   axios
-    //     .get(
-    //       "/2018/10/19/16689e2bb057f60d?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1"
-    //     )
-    //     .then(res => {
-    //       console.log(res);
-    //     });
+
     //   this.setState({
     //     Text: Text.default
     //   });
@@ -51,17 +47,14 @@ class Search extends React.Component {
     // );
   };
   render() {
-    const { Text } = this.state;
     return (
       <div className="search">
         <div className="box">
-          <span>dal</span>
-          <span>你说实话实说</span>
+          <span>你说实话实说????</span>
         </div>
-        <Bar />
-        {Text ? <Text /> : null}
-        <img src={logo} width="100" height="100" onClick={this.loadComponent} />
-        <a href="/index.html">
+        <Bar name="渣渣辉" />
+        <Apple />
+        <a>
           <img
             src={require("../images/flower.jpeg")}
             width="100"
@@ -69,6 +62,7 @@ class Search extends React.Component {
             alt=""
           />
         </a>
+        <a onClick={this.test}>test</a>
       </div>
     );
   }
@@ -76,6 +70,6 @@ class Search extends React.Component {
 
 ReactDOM.render(<Search />, document.getElementById("root"));
 
-if (module.hot) {
-  module.hot.accept();
+if ((module as any).hot) {
+  (module as any).hot.accept();
 }
